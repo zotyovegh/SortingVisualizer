@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,29 +27,23 @@ namespace SortingDeploy.Data
             }
         }
 
-        public void Metyod(Index index)
+    public void BubbleSort(int[] array, int arraySize, Index index)
         {
-            index.Update();
-        }
-
-    public async Task<bool> BubbleSort(int[] array, int arraySize)
-        {
-            bool result = false;
-            Pages.Index index = new Pages.Index();
             for (int i = arraySize - 1; i > 1; i--)
             {
                 for (int j = 0; j < i; j++)
                 {
                     if (array[j] > array[j + 1])
                     {
-                        SwapArrayValues(array, j, j + 1); //ugye itt kellene varázsolni
-                        
                         Thread.Sleep(1000);
-                        result = true;
+                        SwapArrayValues(array, j, j + 1); 
+                        index.Update(j);
+                        
+                        Debug.WriteLine("We are here");
                     }
                 }
             }
-            return result;
+            
         }
 
         public void SwapArrayValues(int[] array, int firstPos, int secondPos)

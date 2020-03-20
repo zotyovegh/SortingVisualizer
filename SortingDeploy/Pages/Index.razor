@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Diagnostics
 @using System.Threading
 @using SortingDeploy.Data
 
@@ -23,12 +24,11 @@
 
 <p>Random number: @stro</p>
 <p>Sorted order: @strr</p>
-
+<p>Test: @actual</p>
 
 <SortingDeploy.Pages.Components.BarChart />
 
-<button class="btn btn-primary" @onclick="Test">Click me</button>
-<p>Test: @actual</p>
+
 
 @code {
 
@@ -43,7 +43,7 @@
     private int rangeOfRandoms;
     private int printNumber;
     private int printRange;
-    private int actual;
+    private string actual;
 
 
 
@@ -65,7 +65,7 @@
 
         if (sortingType == "Bubble Sort")
         {
-            await srt.BubbleSort(array, arraySize); //meg itt
+            srt.BubbleSort(array, arraySize, this);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -100,16 +100,14 @@
 
     }
 
-    public void Test()
-    {
-        srt.Metyod(this);
+    public void Update(int i)                               //This method is called in a for loop
+    {                                                       //Problem to solve: why does Line 105 happens only once (when the for loop is finished)
+        actual = i + " please";                             //while Line 106 happens as many times, as it should?! (see below)
+        Debug.WriteLine("We are in the update");
+        Debug.WriteLine(i);
+        this.StateHasChanged();
     }
-
-    public void Update()
-    {
-        actual = 10;
-    }
-
+                                                            //'actual' is used to print out the received data 
 
 
 }
