@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace SortingDeploy.Data
 {
-    public class SortingMethods
+    public class SortingMethods 
+
     {
+        
         public int RandomNumber(int max)
         {
             Random random = new Random();
@@ -20,23 +24,33 @@ namespace SortingDeploy.Data
             }
         }
 
+        public void MagicMethod(int i)
+        {
+            Pages.Index index = new Pages.Index();
+            index.RefreshTest(10);
+        }
 
         public void BubbleSort(int[] array, int arraySize)
         {
+            Pages.Index index = new Pages.Index();
             for (int i = arraySize - 1; i > 1; i--)
             {
-                for (int j = 0; j < i; j++)
-                {
-                    if (array[j] > array[j + 1])
+                    for (int j = 0; j < i; j++)
                     {
-                        SwapArrayValues(array, j, j + 1);
-                        //basicArrayVisualize(array, arraySize, i, j);
+                        if (array[j] > array[j + 1])
+                        {
+                            
+                            SwapArrayValues(array, j, j + 1);
+                            //basicArrayVisualize(array, arraySize, i, j);
+                            Thread.Sleep(1000);
+
+                        }
                     }
-                }
             }
+            MagicMethod(10);
         }
 
-        private void SwapArrayValues(int[] array, int firstPos, int secondPos)
+        public void SwapArrayValues(int[] array, int firstPos, int secondPos)
         {
             int temp = array[firstPos];
             array[firstPos] = array[secondPos];

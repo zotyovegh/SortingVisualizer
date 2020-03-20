@@ -9,14 +9,14 @@
 
 
 <h2>Chart</h2>
-<div class="row">
+@*<div class="row">
     <button class="btn btn-primary" @onclick="AddData">
         Add Data
     </button>
     <button class="btn btn-primary" @onclick="RemoveData">
         Remove Data
     </button>
-</div>
+</div>*@
 <div style="height: 300px; width: 500px">
     <ChartJsBarChart @ref="_barChart"
                      Config="@_barChartConfig"
@@ -27,7 +27,7 @@
     private BarConfig _barChartConfig;
     private ChartJsBarChart _barChart;
     private BarDataset<DoubleWrapper> _barDataSet;
-    private BarDataset<DoubleWrapper> _barDataSet2;
+    //private BarDataset<DoubleWrapper> _barDataSet2;
 
     protected override void OnInitialized()
     {
@@ -78,52 +78,52 @@
             HoverBorderWidth = 1,
             BorderColor = "#ffffff"
         };
-        _barDataSet2 = new BarDataset<DoubleWrapper>
-        {
-            Label = "Actual time",
-            BackgroundColor = "blue",
-            BorderWidth = 0,
-            HoverBackgroundColor = ColorUtil.RandomColorString(),
-            HoverBorderColor = ColorUtil.RandomColorString(),
-            HoverBorderWidth = 1,
-            BorderColor = "#ffffff"
-        };
+        //_barDataSet2 = new BarDataset<DoubleWrapper>
+        //{
+        //    Label = "Actual time",
+        //    BackgroundColor = "blue",
+        //    BorderWidth = 0,
+        //    HoverBackgroundColor = ColorUtil.RandomColorString(),
+        //    HoverBorderColor = ColorUtil.RandomColorString(),
+        //    HoverBorderWidth = 1,
+        //    BorderColor = "#ffffff"
+        //};
 
         _barDataSet.AddRange(new double[] { 8, 5, 3, 7, 4 }.Wrap());
         _barChartConfig.Data.Datasets.Add(_barDataSet);
 
-        _barDataSet2.AddRange(new double[] { 5, 2, 9, 6, 3 }.Wrap());
-        _barChartConfig.Data.Datasets.Add(_barDataSet2);
+        //_barDataSet2.AddRange(new double[] { 5, 2, 9, 6, 3 }.Wrap());
+        //_barChartConfig.Data.Datasets.Add(_barDataSet2);
     }
 
 
-    private void AddData()
-    {
-        var nowSecond = DateTime.Now.Second;
-        _barChartConfig.Data.Labels.Add(nowSecond.ToString());
-        _barDataSet.Add(new DoubleWrapper(nowSecond));
-        _barDataSet2.Add(new DoubleWrapper(nowSecond));
+    //private void AddData()
+    //{
+    //    var nowSecond = DateTime.Now.Second;
+    //    _barChartConfig.Data.Labels.Add(nowSecond.ToString());
+    //    _barDataSet.Add(new DoubleWrapper(nowSecond));
+    //    _barDataSet2.Add(new DoubleWrapper(nowSecond));
 
-        _barChart.Update();
-
-
+    //    _barChart.Update();
 
 
-    }
 
-    private void RemoveData()
-    {
-        if (_barChartConfig.Data.Labels.Count > 0)
-        {
-            _barChartConfig.Data.Labels.RemoveAt(_barChartConfig.Data.Labels.Count - 1);
-        }
 
-        if (_barDataSet.Data.Count > 0)
-        {
-            _barDataSet.RemoveAt(_barDataSet.Data.Count - 1);
-            _barDataSet2.RemoveAt(_barDataSet.Data.Count - 1);
-        }
+    //}
 
-        _barChart.Update();
-    }
+    //private void RemoveData()
+    //{
+    //    if (_barChartConfig.Data.Labels.Count > 0)
+    //    {
+    //        _barChartConfig.Data.Labels.RemoveAt(_barChartConfig.Data.Labels.Count - 1);
+    //    }
+
+    //    if (_barDataSet.Data.Count > 0)
+    //    {
+    //        _barDataSet.RemoveAt(_barDataSet.Data.Count - 1);
+    //        _barDataSet2.RemoveAt(_barDataSet.Data.Count - 1);
+    //    }
+
+    //    _barChart.Update();
+    //}
 }
