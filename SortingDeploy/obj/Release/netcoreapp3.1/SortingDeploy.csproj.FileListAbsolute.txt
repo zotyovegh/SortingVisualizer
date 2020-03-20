@@ -49,3 +49,15 @@ C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Release\netcoreapp3.
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Release\netcoreapp3.1\SortingDeploy.pdb
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Release\netcoreapp3.1\SortingDeploy.genruntimeconfig.cache
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Release\netcoreapp3.1\SortingDeploy.csproj.CopyComplete
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\MessagePack.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.Azure.SignalR.Common.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.Azure.SignalR.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.Azure.SignalR.Protocols.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\SortingDeploy.StaticWebAssets.xml
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\bin\Release\netcoreapp3.1\ChartJs.Blazor.dll

@@ -1,1 +1,3 @@
-﻿<StaticWebAssets Version="1.0" />
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="_content/ChartJs.Blazor" Path="C:\Users\Zolly\.nuget\packages\chartjs.blazor\1.0.3\build\..\staticwebassets\" />
+</StaticWebAssets>

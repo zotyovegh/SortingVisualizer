@@ -73,6 +73,13 @@ using SortingDeploy.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\_Imports.razor"
+using ChartJs.Blazor;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\Pages\FetchData.razor"
 using SortingDeploy.Data;
 
