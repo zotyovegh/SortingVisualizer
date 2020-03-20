@@ -23,9 +23,12 @@
 
 <p>Random number: @stro</p>
 <p>Sorted order: @strr</p>
-<p>Test: @test</p>
+
 
 <SortingDeploy.Pages.Components.BarChart />
+
+<button class="btn btn-primary" @onclick="Test">Click me</button>
+<p>Test: @actual</p>
 
 @code {
 
@@ -40,11 +43,13 @@
     private int rangeOfRandoms;
     private int printNumber;
     private int printRange;
+    private int actual;
 
 
 
-    private async Task Randomize()
+    private async void Randomize()
     {
+
         array = new int[numberOfRandoms];
         arraySize = numberOfRandoms;
 
@@ -60,7 +65,7 @@
 
         if (sortingType == "Bubble Sort")
         {
-            srt.BubbleSort(array, arraySize);
+            await srt.BubbleSort(array, arraySize); //meg itt
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -94,33 +99,16 @@
 
 
     }
-    private int test;
-    public void RefreshTest(int num)
+
+    public void Test()
     {
-        test = num;
-
+        srt.Metyod(this);
     }
-    //public void BubbleSort(int[] array, int arraySize)
-    //{
 
-    //    for (int i = arraySize - 1; i > 1; i--)
-    //    {
-    //        for (int j = 0; j < i; j++)
-    //        {
-    //            if (array[j] > array[j + 1])
-    //            {
-
-    //                srt.SwapArrayValues(array, j, j + 1);
-    //                //basicArrayVisualize(array, arraySize, i, j);
-    //                Thread.Sleep(1000);
-
-    //                RefreshTest(10);
-    //            }
-    //        }
-    //    }
-
-    //}
-
+    public void Update()
+    {
+        actual = 10;
+    }
 
 
 
