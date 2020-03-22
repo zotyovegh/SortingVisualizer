@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Index = SortingDeploy.Pages.Index;
+
 
 namespace SortingDeploy.Data
 {
     public class SortingMethods
 
     {
-
+        
         public int RandomNumber(int max)
         {
             Random random = new Random();
@@ -27,17 +26,18 @@ namespace SortingDeploy.Data
             }
         }
 
-    public void BubbleSort(int[] array, int arraySize, Index index)
+    public async Task BubbleSort(int[] array, int arraySize, Index index)
         {
-            for (int i = arraySize - 1; i > 1; i--)
+            for (int i = arraySize - 1; i > 0; i--)
             {
                 for (int j = 0; j < i; j++)
                 {
                     if (array[j] > array[j + 1])
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(400);
                         SwapArrayValues(array, j, j + 1); 
-                        index.Update(j);
+                        
+                        await index.Update(array);
                         
                         Debug.WriteLine("We are here");
                     }

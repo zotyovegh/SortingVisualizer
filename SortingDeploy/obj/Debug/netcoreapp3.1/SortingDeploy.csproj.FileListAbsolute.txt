@@ -135,3 +135,5 @@ C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Components\BarChart.razor.g.cs
 C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\Razor\Pages\Components\BarChart.razor.g.cs
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Components\Chart.razor.g.cs
+C:\Users\Zolly\source\repos\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\Razor\Pages\Components\Chart.razor.g.cs

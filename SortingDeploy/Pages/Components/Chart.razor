@@ -1,4 +1,5 @@
-﻿@using ChartJs.Blazor.ChartJS.BarChart
+﻿@using System.Collections.Generic
+@using ChartJs.Blazor.ChartJS.BarChart
 @using ChartJs.Blazor.ChartJS.BarChart.Axes
 @using ChartJs.Blazor.ChartJS.Common.Axes
 @using ChartJs.Blazor.ChartJS.Common.Axes.Ticks
@@ -6,7 +7,7 @@
 @using ChartJs.Blazor.ChartJS.Common.Wrappers
 @using ChartJs.Blazor.Charts
 @using ChartJs.Blazor.Util
-@using SortingDeploy.Data
+@using Microsoft.AspNetCore.Components
 
 <div style="height: 300px; width: 500px">
     <ChartJsBarChart @ref="_barChart"
@@ -69,7 +70,7 @@
             HoverBorderWidth = 1,
             BorderColor = "#ffffff"
         };
-        
+
 
         _barDataSet.AddRange(DoubleArray().Wrap());
         _barChartConfig.Data.Datasets.Add(_barDataSet);
@@ -86,6 +87,6 @@
         double[] d = ints.ToArray();
         return d;
     }
- 
+
 
 }
