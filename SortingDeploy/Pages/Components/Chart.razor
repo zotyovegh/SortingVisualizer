@@ -17,9 +17,11 @@
 </div>
 @code{
     [Parameter] public int[] array { get; set; }
+    [Parameter] public int arraySize { get; set; }
     private BarConfig _barChartConfig;
     private ChartJsBarChart _barChart;
     private BarDataset<DoubleWrapper> _barDataSet;
+
 
     protected override void OnInitialized()
     {
@@ -58,7 +60,7 @@
 
 
 
-        _barChartConfig.Data.Labels.AddRange(new[] { "A", "B", "C", "D", "E" });
+        _barChartConfig.Data.Labels.AddRange(Range());
 
         _barDataSet = new BarDataset<DoubleWrapper>
         {
@@ -77,15 +79,70 @@
 
     }
 
+    //private double[] DoubleArray()
+    //{
+    //    List<double> ints = new List<double>();
+    //    for (int i = 0; i < array.Length; i++)
+    //    {
+    //        ints.Add(array[i]);
+    //    }
+    //    double[] d = ints.ToArray();
+    //    return d;
+    //}
+
+    //private string[] Range()
+    //{
+    //    List<string> t = new List<string>();
+    //    for (int i = 0; i < array.Length; i++)
+    //    {
+    //        t.Add(i + "");
+    //    }
+    //    string[] str = t.ToArray();
+    //    return str;
+    //}
+
     private double[] DoubleArray()
     {
-        List<double> ints = new List<double>();
-        for (int i = 0; i < array.Length; i++)
+        if (array != null)
         {
-            ints.Add(array[i]);
+            List<double> ints = new List<double>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                ints.Add(array[i]);
+            }
+            double[] d = ints.ToArray();
+            return d;
         }
-        double[] d = ints.ToArray();
-        return d;
+        if(array  == null)
+        {
+            List<double> temp = new List<double>();
+            temp.Add(0);
+            double[] str = temp.ToArray();
+            return str;
+        }
+        return null;
+    }
+
+    private string[] Range()
+    {
+        if (array != null)
+        {
+            List<string> t = new List<string>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                t.Add(i + "");
+            }
+            string[] str = t.ToArray();
+            return str;
+        }
+        if(array  == null)
+        {
+            List<string> temp = new List<string>();
+            temp.Add(" ");
+            string[] str = temp.ToArray();
+            return str;
+        }
+        return null;
     }
 
 
