@@ -4,13 +4,34 @@
 
 <p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@*<button class="btn btn-primary" >Click me</button>*@
+<button class="btn btn-primary" disabled="@IsDisabled" @onclick="DisableCheck">Heyhó</button>
+@*<input bind="@IsDisabled" type="checkbox" />
+
+<input disabled="@IsDisabled" type="time" />*@
+
+<select class="form-control">
+    <option selected>Bubble Sort</option>
+    <option>Selection Sort</option>
+    <option>Insertion Sort</option>
+</select>
 
 @code {
+    protected bool IsDisabled { get; set; }
+
     private int currentCount = 0;
 
-    private void IncrementCount()
+    private void DisableCheck()
     {
-        currentCount++;
+        IsDisabled = true;
+        //currentCount++;
+        //if (IsDisabled)
+        //{
+        //    IsDisabled = false;
+        //}
+        //else
+        //{
+        //    IsDisabled = true;
+        //}
     }
 }

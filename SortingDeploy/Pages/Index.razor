@@ -16,7 +16,7 @@
 
 
 <select class="form-control" @bind="sortingType">
-    <option disabled selected hidden>Choice</option>
+    @*<option disabled selected hidden>Choice</option>*@
     <option>Bubble Sort</option>
     <option>Selection Sort</option>
     <option>Insertion Sort</option>
@@ -24,25 +24,29 @@
 
 <p></p>
 <p>Number of randoms:</p>
-<input type="range" min="1" max="50" step="1" @bind="numberOfRandoms" />
+<input type="range" min="3" max="50" step="1" @bind="numberOfRandoms" />
 <p>@printNumber</p>
 <p>Range of randoms:</p>
-<input type="range" min="1" max="100" step="1" @bind="rangeOfRandoms" />
+<input type="range" min="5" max="100" step="1" @bind="rangeOfRandoms" />
 <p>@printRange</p>
-<button class="btn btn-primary" @onclick="Randomize">Click me</button>
+<p>Speed:</p>
+<input type="range" min="50" max="2000" step="1" @bind="timeOfCalc" />
+<p>@printTime</p>
+
+
+<button class="btn btn-primary" @onclick="Randomize" disabled="@IsDisabled">Click me</button>
 
 <p>Random number: @stro</p>
 <p>Sorting: @currentArray</p>
-@*<button class="btn btn-primary" @onclick="AddData">Add data</button>*@
-    <div style="height: 300px; width: 500px">
-        <ChartJsBarChart @ref="_barChart"
-                         Config="@_barChartConfig"
-                         Width="300"
-                         Height="150" />
-    </div>
+<div style="height: 300px; width: 500px">
+    <ChartJsBarChart @ref="_barChart"
+                     Config="@_barChartConfig"
+                     Width="300"
+                     Height="150" />
+</div>
 
 
-    @code {
+@code {
 
         SortingMethods srt = new SortingMethods();
         private bool b = false;
@@ -53,19 +57,27 @@
         private string sortingType;
         private int numberOfRandoms;
         private int rangeOfRandoms;
+        private int timeOfCalc;
         private int printNumber;
         private int printRange;
+        private int printTime;
         private string currentArray;
         private string tempArray;
         private int check;
         private bool checkBool;
+        protected bool IsDisabled { get; set; }
 
         private BarConfig _barChartConfig;
         private ChartJsBarChart _barChart;
         private BarDataset<DoubleWrapper> _barDataSet;
 
-        protected void Randomize()
+        private void Randomize()
         {
+            if(sortingType == null)
+            {
+                sortingType = "Bubble Sort";
+            }
+            DisableCheck();
             check = 1;
 
             if (checkBool)
@@ -88,19 +100,20 @@
 
             if (sortingType == "Bubble Sort")
             {
-                srt.BubbleSort(array, arraySize, this);
+                srt.BubbleSort(array, arraySize, this, timeOfCalc);
             }
             else if (sortingType == "Selection Sort")
             {
-                srt.SelectionSort(array, arraySize, this);
+                srt.SelectionSort(array, arraySize, this, timeOfCalc);
             }
             else if (sortingType == "Insertion Sort")
             {
-                srt.InsertionSort(array, arraySize, this);
+                srt.InsertionSort(array, arraySize, this, timeOfCalc);
             }
 
             printNumber = numberOfRandoms;
             printRange = rangeOfRandoms;
+            printNumber = timeOfCalc;
 
         }
 
@@ -229,5 +242,17 @@
 
         }
 
+        public void DisableCheck()
+        {
 
-    }
+            if (IsDisabled)
+            {
+                IsDisabled = false;
+            }
+            else
+            {
+                IsDisabled = true;
+            }
+            StateHasChanged();
+        }
+}

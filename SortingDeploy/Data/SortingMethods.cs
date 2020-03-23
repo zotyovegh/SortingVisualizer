@@ -26,15 +26,21 @@ namespace SortingDeploy.Data
             }
         }
 
-    public async Task BubbleSort(int[] array, int arraySize, Index index)
+    public async Task BubbleSort(int[] array, int arraySize, Index index, int time)
         {
+            
             for (int i = arraySize - 1; i > 0; i--)
             {
+                if (i == arraySize - 1)
+                {
+                    await index.Update(array);
+                    Thread.Sleep(1000);
+                }
                 for (int j = 0; j < i; j++)
                 {
                     if (array[j] > array[j + 1])
                     {
-                        Thread.Sleep(200);
+                        Thread.Sleep(time);
                         SwapArrayValues(array, j, j + 1); 
                         
                         await index.Update(array);
@@ -43,7 +49,7 @@ namespace SortingDeploy.Data
                     }
                 }
             }
-            
+            index.DisableCheck();
         }
 
         public void SwapArrayValues(int[] array, int firstPos, int secondPos)
@@ -52,10 +58,16 @@ namespace SortingDeploy.Data
             array[firstPos] = array[secondPos];
             array[secondPos] = temp;
         }
-        public async Task SelectionSort(int[] array, int arraySize, Index index)
+        public async Task SelectionSort(int[] array, int arraySize, Index index, int time)
         {
+            
             for (int x = 0; x < arraySize - 1; x++)
             {
+                if (x == 0)
+                {
+                    await index.Update(array);
+                    Thread.Sleep(1000);
+                }
                 Debug.WriteLine("X: " + x);
                 int min = x;
                 
@@ -66,19 +78,26 @@ namespace SortingDeploy.Data
                     {
                         
                         min = y;
-                        Thread.Sleep(200);
+                        
                      
                     }
                 }
+                Thread.Sleep(time);
                 SwapArrayValues(array, x, min);
                 await index.Update(array);
             }
+            index.DisableCheck();
         }
 
-        public async Task InsertionSort(int[] array, int arraySize, Index index)
+        public async Task InsertionSort(int[] array, int arraySize, Index index, int time)
         {
             for (int i = 1; i < arraySize; i++)
             {
+                if (i == 1)
+                {
+                    await index.Update(array);
+                    Thread.Sleep(1000);
+                }
                 int temp = i;
                 int numToInsert = array[i];
                 while ((temp > 0) && (array[temp - 1] > numToInsert))
@@ -87,11 +106,13 @@ namespace SortingDeploy.Data
                     array[temp] = array[temp - 1];
                     temp--;
                     await index.Update(array);
+                    Thread.Sleep(time);
                 }
 
                 array[temp] = numToInsert;
                 
             }
+            index.DisableCheck();
         }
 
         //public void printArray(int[] array, int arraySize)
