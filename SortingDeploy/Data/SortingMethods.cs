@@ -54,20 +54,24 @@ namespace SortingDeploy.Data
         }
         public async Task SelectionSort(int[] array, int arraySize, Index index)
         {
-            for (int x = 0; x < arraySize; x++)
+            for (int x = 0; x < arraySize - 1; x++)
             {
+                Debug.WriteLine("X: " + x);
                 int min = x;
-
-                for (int y = x; y < arraySize; y++)
+                
+                for (int y = x + 1; y < arraySize; y++)
                 {
-                    if (array[min] > array[y])
+                    Debug.WriteLine("Y: " + y);
+                    if (array[y] < array[min])
                     {
+                        
                         min = y;
-                        await index.Update(array);
+                        Thread.Sleep(200);
+                     
                     }
                 }
                 SwapArrayValues(array, x, min);
-                
+                await index.Update(array);
             }
         }
 

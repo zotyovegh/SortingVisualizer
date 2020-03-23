@@ -58,6 +58,7 @@
         private string currentArray;
         private string tempArray;
         private int check;
+        private bool checkBool;
 
         private BarConfig _barChartConfig;
         private ChartJsBarChart _barChart;
@@ -66,12 +67,19 @@
         protected void Randomize()
         {
             check = 1;
+
+            if (checkBool)
+            {
+                _barDataSet.RemoveRange(0, arraySize);
+                _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+            }
+            checkBool = true;
+
             array = new int[numberOfRandoms];
             arraySize = numberOfRandoms;
 
             stro = "";
             srt.CreateRandomArray(arraySize, array, rangeOfRandoms);
-
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -90,7 +98,6 @@
             {
                 srt.InsertionSort(array, arraySize, this);
             }
-
 
             printNumber = numberOfRandoms;
             printRange = rangeOfRandoms;
@@ -117,6 +124,7 @@
 
                 Debug.WriteLine("After add range: " + check);
             }
+
             check++;
             if (check > 2)
             {
@@ -220,14 +228,6 @@
             }
 
         }
-        //private void AddData()
-        //{
-        //    var nowSecond = DateTime.Now.Second;
-        //    _barChartConfig.Data.Labels.Add(nowSecond.ToString());
-        //    _barDataSet.Add(new DoubleWrapper(nowSecond));
 
 
-        //    _barChart.Update();
-
-        //}
     }
