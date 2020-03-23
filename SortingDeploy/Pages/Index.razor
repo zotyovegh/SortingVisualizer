@@ -58,9 +58,12 @@
         private string currentArray;
         private string tempArray;
 
+        private BarConfig _barChartConfig;
+        private ChartJsBarChart _barChart;
+        private BarDataset<DoubleWrapper> _barDataSet;
+
         protected void Randomize()
         {
-
             array = new int[numberOfRandoms];
             arraySize = numberOfRandoms;
 
@@ -101,32 +104,19 @@
             }
 
             currentArray = tempArray;
-            Debug.WriteLine("We are in the update");
-
             await Task.Delay(2);
-            _barChartConfig.Data.Labels.Clear();
+            
             
             _barChartConfig.Data.Labels.AddRange(Range());
+
             _barDataSet.AddRange(DoubleArray().Wrap());
             await _barChart.Update();
             StateHasChanged();
-
 
             Debug.WriteLine(tempArray);
             tempArray = "";
 
         }
-
-        public async Task ForceUpdate()
-        {
-            await _barChart.Update();
-        }
-
-
-        private BarConfig _barChartConfig;
-        private ChartJsBarChart _barChart;
-        private BarDataset<DoubleWrapper> _barDataSet;
-
 
         protected override void OnInitialized()
         {
@@ -172,24 +162,23 @@
 
         }
 
+        
         private double[] DoubleArray()
         {
+            List<double> temp = new List<double>();
             if (array != null)
             {
-                List<double> ints = new List<double>();
                 for (int i = 0; i < array.Length; i++)
                 {
-                    ints.Add(array[i]);
+                    temp.Add(array[i]);
                 }
-                double[] d = ints.ToArray();
+                double[] d = temp.ToArray();
                 return d;
             }
             if (array == null)
             {
-                List<double> temp = new List<double>();
-                temp.Add(0);
-                double[] str = temp.ToArray();
-                return str;
+                double[] d = temp.ToArray();
+                return d;
             }
             return null;
         }
@@ -199,7 +188,7 @@
             List<string> temp = new List<string>();
             if (array == null)
             {
-                temp.Add(" ");
+
                 string[] str = temp.ToArray();
                 return str;
             }
@@ -212,7 +201,7 @@
                 string[] str = temp.ToArray();
                 return str;
             }
-            
+
         }
         //private void AddData()
         //{

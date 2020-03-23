@@ -64,7 +64,6 @@ namespace SortingDeploy.Data
                     {
                         min = y;
                         await index.Update(array);
-                        await index.ForceUpdate();
                     }
                 }
                 SwapArrayValues(array, x, min);
