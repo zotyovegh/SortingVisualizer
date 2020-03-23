@@ -53,14 +53,8 @@
 
             }
         };
-
-
-
-
-
-
-
         _barChartConfig.Data.Labels.AddRange(Range());
+        
 
         _barDataSet = new BarDataset<DoubleWrapper>
         {
@@ -79,71 +73,50 @@
 
     }
 
-    //private double[] DoubleArray()
-    //{
-    //    List<double> ints = new List<double>();
-    //    for (int i = 0; i < array.Length; i++)
-    //    {
-    //        ints.Add(array[i]);
-    //    }
-    //    double[] d = ints.ToArray();
-    //    return d;
-    //}
-
-    //private string[] Range()
-    //{
-    //    List<string> t = new List<string>();
-    //    for (int i = 0; i < array.Length; i++)
-    //    {
-    //        t.Add(i + "");
-    //    }
-    //    string[] str = t.ToArray();
-    //    return str;
-    //}
-
     private double[] DoubleArray()
     {
-        if (array != null)
+        List<double> ints = new List<double>();
+        for (int i = 0; i < array.Length; i++)
         {
-            List<double> ints = new List<double>();
-            for (int i = 0; i < array.Length; i++)
-            {
-                ints.Add(array[i]);
-            }
-            double[] d = ints.ToArray();
-            return d;
+            ints.Add(array[i]);
         }
-        if(array  == null)
-        {
-            List<double> temp = new List<double>();
-            temp.Add(0);
-            double[] str = temp.ToArray();
-            return str;
-        }
-        return null;
+        double[] d = ints.ToArray();
+        return d;
     }
 
     private string[] Range()
     {
-        if (array != null)
+        List<string> t = new List<string>();
+        for (int i = 0; i < array.Length; i++)
         {
-            List<string> t = new List<string>();
-            for (int i = 0; i < array.Length; i++)
-            {
-                t.Add(i + "");
-            }
-            string[] str = t.ToArray();
-            return str;
+            t.Add(i + "");
         }
-        if(array  == null)
-        {
-            List<string> temp = new List<string>();
-            temp.Add(" ");
-            string[] str = temp.ToArray();
-            return str;
-        }
-        return null;
+        string[] str = t.ToArray();
+        return str;
     }
 
+    private void AddData()
+    {
+        var nowSecond = DateTime.Now.Second;
+        _barChartConfig.Data.Labels.Add(nowSecond.ToString());
+        _barDataSet.Add(new DoubleWrapper(nowSecond));
 
+        _barChart.Update();
+
+    }
+
+    private void RemoveData()
+    {
+        if (_barChartConfig.Data.Labels.Count > 0)
+        {
+            _barChartConfig.Data.Labels.RemoveAt(_barChartConfig.Data.Labels.Count - 1);
+        }
+
+        if (_barDataSet.Data.Count > 0)
+        {
+            _barDataSet.RemoveAt(_barDataSet.Data.Count - 1);
+        }
+
+        _barChart.Update();
+    }
 }

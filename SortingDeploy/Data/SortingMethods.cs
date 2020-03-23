@@ -52,7 +52,7 @@ namespace SortingDeploy.Data
             array[firstPos] = array[secondPos];
             array[secondPos] = temp;
         }
-        public void SelectionSort(int[] array, int arraySize)
+        public async Task SelectionSort(int[] array, int arraySize, Index index)
         {
             for (int x = 0; x < arraySize; x++)
             {
@@ -63,13 +63,16 @@ namespace SortingDeploy.Data
                     if (array[min] > array[y])
                     {
                         min = y;
+                        await index.Update(array);
+                        await index.ForceUpdate();
                     }
                 }
                 SwapArrayValues(array, x, min);
+                
             }
         }
 
-        public void InsertionSort(int[] array, int arraySize)
+        public async Task InsertionSort(int[] array, int arraySize, Index index)
         {
             for (int i = 1; i < arraySize; i++)
             {
@@ -80,9 +83,11 @@ namespace SortingDeploy.Data
 
                     array[temp] = array[temp - 1];
                     temp--;
+                    await index.Update(array);
                 }
 
                 array[temp] = numToInsert;
+                
             }
         }
 

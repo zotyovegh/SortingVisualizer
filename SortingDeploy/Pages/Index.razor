@@ -33,175 +33,195 @@
 
 <p>Random number: @stro</p>
 <p>Sorting: @currentArray</p>
-
-<SortingDeploy.Pages.Components.Chart array="array"/>
-    
- 
-    @*<div style="height: 300px; width: 500px">
+@*<button class="btn btn-primary" @onclick="AddData">Add data</button>*@
+    <div style="height: 300px; width: 500px">
         <ChartJsBarChart @ref="_barChart"
-                     Config="@_barChartConfig"
-                     Width="300"
-                     Height="150" />
-    </div>*@
-
-@code {
-
-    SortingMethods srt = new SortingMethods();
-    private bool b = false;
-    private int arraySize = 10;
-    private int[] array;
-    private string stro = "";
-
-    private string sortingType;
-    private int numberOfRandoms;
-    private int rangeOfRandoms;
-    private int printNumber;
-    private int printRange;
-    private string currentArray;
-    private string tempArray;
-
-    protected void Randomize()
-    {
-
-        array = new int[numberOfRandoms];
-        arraySize = numberOfRandoms;
-
-        stro = "";
-        srt.CreateRandomArray(arraySize, array, rangeOfRandoms);
+                         Config="@_barChartConfig"
+                         Width="300"
+                         Height="150" />
+    </div>
 
 
-        for (int i = 0; i < array.Length; i++)
+    @code {
+
+        SortingMethods srt = new SortingMethods();
+        private bool b = false;
+        private int arraySize = 10;
+        private int[] array;
+        private string stro = "";
+
+        private string sortingType;
+        private int numberOfRandoms;
+        private int rangeOfRandoms;
+        private int printNumber;
+        private int printRange;
+        private string currentArray;
+        private string tempArray;
+
+        protected void Randomize()
         {
-            stro = stro + " " + array[i];
+
+            array = new int[numberOfRandoms];
+            arraySize = numberOfRandoms;
+
+            stro = "";
+            srt.CreateRandomArray(arraySize, array, rangeOfRandoms);
+
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                stro = stro + " " + array[i];
+            }
+
+            if (sortingType == "Bubble Sort")
+            {
+                srt.BubbleSort(array, arraySize, this);
+            }
+            else if (sortingType == "Selection Sort")
+            {
+                srt.SelectionSort(array, arraySize, this);
+            }
+            else if (sortingType == "Insertion Sort")
+            {
+                srt.InsertionSort(array, arraySize, this);
+            }
+
+            printNumber = numberOfRandoms;
+            printRange = rangeOfRandoms;
+
         }
 
-        if (sortingType == "Bubble Sort")
+        public async Task Update(int[] a)
         {
-            srt.BubbleSort(array, arraySize, this);
-        }
-        else if (sortingType == "Selection Sort")
-        {
-            srt.SelectionSort(array, arraySize);
-        }
-        else if (sortingType == "Insertion Sort")
-        {
-            srt.InsertionSort(array, arraySize);
+            array = a;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                tempArray = tempArray + " " + array[i];
+            }
+
+            currentArray = tempArray;
+            Debug.WriteLine("We are in the update");
+
+            await Task.Delay(2);
+            _barChartConfig.Data.Labels.Clear();
+            
+            _barChartConfig.Data.Labels.AddRange(Range());
+            _barDataSet.AddRange(DoubleArray().Wrap());
+            await _barChart.Update();
+            StateHasChanged();
+
+
+            Debug.WriteLine(tempArray);
+            tempArray = "";
+
         }
 
-        printNumber = numberOfRandoms;
-        printRange = rangeOfRandoms;
+        public async Task ForceUpdate()
+        {
+            await _barChart.Update();
+        }
 
+
+        private BarConfig _barChartConfig;
+        private ChartJsBarChart _barChart;
+        private BarDataset<DoubleWrapper> _barDataSet;
+
+
+        protected override void OnInitialized()
+        {
+            _barChartConfig = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Simple Bar Chart"
+                    },
+
+                    Responsive = true,
+                    Scales = new BarScales
+                    {
+                        YAxes = new List<CartesianAxis> {
+                        new LinearCartesianAxis {
+                            Ticks = new LinearCartesianTicks {
+                                AutoSkip = false,
+                                Min = 0 // Otherwise the lowest value in the dataset won't be visible
+                            }
+                        }
+                    }
+                    }
+                }
+            };
+
+            _barChartConfig.Data.Labels.AddRange(Range());
+            _barDataSet = new BarDataset<DoubleWrapper>
+            {
+                Label = "",
+                BackgroundColor = "red",
+                BorderWidth = 0,
+                HoverBackgroundColor = ColorUtil.RandomColorString(),
+                HoverBorderColor = ColorUtil.RandomColorString(),
+                HoverBorderWidth = 1,
+                BorderColor = "#ffffff"
+            };
+
+            _barDataSet.AddRange(DoubleArray().Wrap());
+            _barChartConfig.Data.Datasets.Add(_barDataSet);
+
+        }
+
+        private double[] DoubleArray()
+        {
+            if (array != null)
+            {
+                List<double> ints = new List<double>();
+                for (int i = 0; i < array.Length; i++)
+                {
+                    ints.Add(array[i]);
+                }
+                double[] d = ints.ToArray();
+                return d;
+            }
+            if (array == null)
+            {
+                List<double> temp = new List<double>();
+                temp.Add(0);
+                double[] str = temp.ToArray();
+                return str;
+            }
+            return null;
+        }
+
+        private string[] Range()
+        {
+            List<string> temp = new List<string>();
+            if (array == null)
+            {
+                temp.Add(" ");
+                string[] str = temp.ToArray();
+                return str;
+            }
+            else
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    temp.Add(i + "");
+                }
+                string[] str = temp.ToArray();
+                return str;
+            }
+            
+        }
+        //private void AddData()
+        //{
+        //    var nowSecond = DateTime.Now.Second;
+        //    _barChartConfig.Data.Labels.Add(nowSecond.ToString());
+        //    _barDataSet.Add(new DoubleWrapper(nowSecond));
+
+
+        //    _barChart.Update();
+
+        //}
     }
-
-    public async Task Update(int[] a)
-    {
-        array = a;
-
-        for (int i = 0; i < array.Length; i++)
-        {
-            tempArray = tempArray + " " + array[i];
-        }
-
-        currentArray = tempArray;
-        Debug.WriteLine("We are in the update");
-
-        await Task.Delay(2);
-        StateHasChanged();
-        Debug.WriteLine(tempArray);
-        tempArray = "";
-
-    }
-
-    //private BarConfig _barChartConfig;
-    //private ChartJsBarChart _barChart;
-    //private BarDataset<DoubleWrapper> _barDataSet;
-
-
-    //protected override void OnInitialized()
-    //{
-    //    _barChartConfig = new BarConfig
-    //    {
-    //        Options = new BarOptions
-    //        {
-    //            Title = new OptionsTitle
-    //            {
-    //                Display = true,
-    //                Text = "Simple Bar Chart"
-    //            },
-
-    //            Responsive = true,
-    //            Scales = new BarScales
-    //            {
-    //                YAxes = new List<CartesianAxis> {
-    //                    new LinearCartesianAxis {
-    //                        Ticks = new LinearCartesianTicks {
-    //                            AutoSkip = false,
-    //                            Min = 0 // Otherwise the lowest value in the dataset won't be visible
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    };
-
-    //    _barChartConfig.Data.Labels.AddRange(Range());
-    //    _barDataSet = new BarDataset<DoubleWrapper>
-    //    {
-    //        Label = "Estimated time",
-    //        BackgroundColor = "red",
-    //        BorderWidth = 0,
-    //        HoverBackgroundColor = ColorUtil.RandomColorString(),
-    //        HoverBorderColor = ColorUtil.RandomColorString(),
-    //        HoverBorderWidth = 1,
-    //        BorderColor = "#ffffff"
-    //    };
-
-    //    _barDataSet.AddRange(DoubleArray().Wrap());
-    //    _barChartConfig.Data.Datasets.Add(_barDataSet);
-
-    //}
-
-    //private double[] DoubleArray()
-    //{
-    //    if (array != null)
-    //    {
-    //        List<double> ints = new List<double>();
-    //        for (int i = 0; i < array.Length; i++)
-    //        {
-    //            ints.Add(array[i]);
-    //        }
-    //        double[] d = ints.ToArray();
-    //        return d;
-    //    }
-    //    if(array  == null)
-    //    {
-    //        List<double> temp = new List<double>();
-    //        temp.Add(0);
-    //        double[] str = temp.ToArray();
-    //        return str;
-    //    }
-    //    return null;
-    //}
-
-    //private string[] Range()
-    //{
-    //    if (array != null)
-    //    {
-    //        List<string> t = new List<string>();
-    //        for (int i = 0; i < array.Length; i++)
-    //        {
-    //            t.Add(i + "");
-    //        }
-    //        string[] str = t.ToArray();
-    //        return str;
-    //    }
-    //    if(array  == null)
-    //    {
-    //        List<string> temp = new List<string>();
-    //        temp.Add(" ");
-    //        string[] str = temp.ToArray();
-    //        return str;
-    //    }
-    //    return null;
-    //}
-}
