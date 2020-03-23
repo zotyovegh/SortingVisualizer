@@ -34,7 +34,7 @@ namespace SortingDeploy.Data
                 {
                     if (array[j] > array[j + 1])
                     {
-                        Thread.Sleep(400);
+                        Thread.Sleep(200);
                         SwapArrayValues(array, j, j + 1); 
                         
                         await index.Update(array);

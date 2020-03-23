@@ -57,6 +57,7 @@
         private int printRange;
         private string currentArray;
         private string tempArray;
+        private int check;
 
         private BarConfig _barChartConfig;
         private ChartJsBarChart _barChart;
@@ -64,6 +65,7 @@
 
         protected void Randomize()
         {
+            check = 1;
             array = new int[numberOfRandoms];
             arraySize = numberOfRandoms;
 
@@ -89,6 +91,7 @@
                 srt.InsertionSort(array, arraySize, this);
             }
 
+
             printNumber = numberOfRandoms;
             printRange = rangeOfRandoms;
 
@@ -105,11 +108,24 @@
 
             currentArray = tempArray;
             await Task.Delay(2);
-            
-            
-            _barChartConfig.Data.Labels.AddRange(Range());
+
+
+            if (check == 1)
+            {
+                Debug.WriteLine("Before add range: " + check);
+                _barChartConfig.Data.Labels.AddRange(Range());
+
+                Debug.WriteLine("After add range: " + check);
+            }
+            check++;
+            if (check > 2)
+            {
+                _barDataSet.RemoveRange(0, arraySize);
+
+            }
 
             _barDataSet.AddRange(DoubleArray().Wrap());
+
             await _barChart.Update();
             StateHasChanged();
 
@@ -146,6 +162,7 @@
             };
 
             _barChartConfig.Data.Labels.AddRange(Range());
+
             _barDataSet = new BarDataset<DoubleWrapper>
             {
                 Label = "",
@@ -162,7 +179,7 @@
 
         }
 
-        
+
         private double[] DoubleArray()
         {
             List<double> temp = new List<double>();
