@@ -16,7 +16,6 @@
 
 
 <select class="form-control" @bind="sortingType">
-    @*<option disabled selected hidden>Choice</option>*@
     <option>Bubble Sort</option>
     <option>Selection Sort</option>
     <option>Insertion Sort</option>
@@ -24,17 +23,17 @@
 
 <p></p>
 <p>Number of randoms:</p>
-<input type="range" min="3" max="50" step="1" @bind="numberOfRandoms" />
-<p>@printNumber</p>
+<input type="range" min="4" max="50" step="1" value="printSize" @oninput="@((args) => CalcSize(args.Value.ToString()))" />
+<p>@printSize</p>
 <p>Range of randoms:</p>
-<input type="range" min="5" max="100" step="1" @bind="rangeOfRandoms" />
+<input type="range" min="5" max="100" step="1" value="printRange" @oninput="@((args) => CalcRange(args.Value.ToString()))" />
 <p>@printRange</p>
 <p>Speed:</p>
-<input type="range" min="50" max="2000" step="1" @bind="timeOfCalc" />
+<input type="range" min="50" max="2000" step="1" value="printTime" @oninput="@((args) => CalcTime(args.Value.ToString()))" />
 <p>@printTime</p>
 
 
-<button class="btn btn-primary" @onclick="Randomize" disabled="@IsDisabled">Click me</button>
+<button class="btn btn-primary" @onclick="Sort" disabled="@IsDisabled">Click me</button>
 
 <p>Random number: @stro</p>
 <p>Sorting: @currentArray</p>
@@ -48,215 +47,254 @@
 
 @code {
 
-        SortingMethods srt = new SortingMethods();
-        private bool b = false;
-        private int arraySize = 10;
-        private int[] array;
-        private string stro = "";
+    SortingMethods srt = new SortingMethods();
+    private bool b = false;
+    private int arraySize = 10;
+    private int[] array;
+    private string stro = "";
 
-        private string sortingType;
-        private int numberOfRandoms;
-        private int rangeOfRandoms;
-        private int timeOfCalc;
-        private int printNumber;
-        private int printRange;
-        private int printTime;
-        private string currentArray;
-        private string tempArray;
-        private int check;
-        private bool checkBool;
-        protected bool IsDisabled { get; set; }
+    private string sortingType = "Bubble Sort";
+    private int numberOfRandoms;
+    private int rangeOfRandoms;
+    private int timeOfCalc;
+    private int printSize = 27;
+    private int printRange = 52;
+    private int printTime = 1017;
+    private string currentArray;
+    private string tempArray;
+    private int check;
+    private bool checkBool;
+    protected bool IsDisabled { get; set; }
+    private bool startScenario;
 
-        private BarConfig _barChartConfig;
-        private ChartJsBarChart _barChart;
-        private BarDataset<DoubleWrapper> _barDataSet;
 
-        private void Randomize()
+    private BarConfig _barChartConfig;
+    private ChartJsBarChart _barChart;
+    private BarDataset<DoubleWrapper> _barDataSet;
+
+    public void CalcSize(string step)
+    {
+
+        printSize = Convert.ToInt32(step);
+
+        Randomize();
+
+
+    }
+    public void CalcRange(string step)
+    {
+        printRange = Convert.ToInt32(step);
+
+        Randomize();
+
+
+    }
+    public void CalcTime(string step)
+    {
+        printTime = Convert.ToInt32(step);
+    }
+
+
+    private void Randomize()
+    {
+        check = 1;
+
+
+        _barDataSet.RemoveRange(0, arraySize);
+        _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+
+        checkBool = true;
+        array = new int[printSize];
+        arraySize = printSize;
+
+        stro = "";
+        srt.CreateRandomArray(arraySize, array, printRange);
+        for (int i = 0; i < array.Length; i++)
         {
-            if(sortingType == null)
-            {
-                sortingType = "Bubble Sort";
-            }
-            DisableCheck();
-            check = 1;
+            stro = stro + " " + array[i];
+        }
+        Debug.WriteLine(stro);
 
-            if (checkBool)
-            {
-                _barDataSet.RemoveRange(0, arraySize);
-                _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
-            }
-            checkBool = true;
 
-            array = new int[numberOfRandoms];
-            arraySize = numberOfRandoms;
+        Update(array);
 
-            stro = "";
-            srt.CreateRandomArray(arraySize, array, rangeOfRandoms);
 
-            for (int i = 0; i < array.Length; i++)
-            {
-                stro = stro + " " + array[i];
-            }
+    }
 
-            if (sortingType == "Bubble Sort")
-            {
-                srt.BubbleSort(array, arraySize, this, timeOfCalc);
-            }
-            else if (sortingType == "Selection Sort")
-            {
-                srt.SelectionSort(array, arraySize, this, timeOfCalc);
-            }
-            else if (sortingType == "Insertion Sort")
-            {
-                srt.InsertionSort(array, arraySize, this, timeOfCalc);
-            }
+    private void Sort()
+    {
 
-            printNumber = numberOfRandoms;
-            printRange = rangeOfRandoms;
-            printNumber = timeOfCalc;
+        DisableCheck();
+
+
+        if (sortingType == "Bubble Sort")
+        {
+            srt.BubbleSort(array, arraySize, this, timeOfCalc);
+        }
+        else if (sortingType == "Selection Sort")
+        {
+            srt.SelectionSort(array, arraySize, this, timeOfCalc);
+        }
+        else if (sortingType == "Insertion Sort")
+        {
+            srt.InsertionSort(array, arraySize, this, timeOfCalc);
+        }
+
+
+
+    }
+
+    public async Task Update(int[] a)
+    {
+        array = a;
+
+        if (check == 1)
+        {
+            Debug.WriteLine("Before add range: " + check);
+            _barChartConfig.Data.Labels.AddRange(Range());
+
+            Debug.WriteLine("After add range: " + check);
+        }
+       
+        check++;
+        if (check > 2)
+        {
+            _barDataSet.RemoveRange(0, arraySize);
 
         }
 
-        public async Task Update(int[] a)
+        _barDataSet.AddRange(DoubleArray().Wrap());
+
+        await _barChart.Update();
+      
+        tempArray = "";
+
+    }
+
+    protected override void OnInitialized()
+    {
+        _barChartConfig = new BarConfig
         {
-            array = a;
-
-            for (int i = 0; i < array.Length; i++)
+            Options = new BarOptionsSub
             {
-                tempArray = tempArray + " " + array[i];
-            }
-
-            currentArray = tempArray;
-            await Task.Delay(2);
-
-
-            if (check == 1)
-            {
-                Debug.WriteLine("Before add range: " + check);
-                _barChartConfig.Data.Labels.AddRange(Range());
-
-                Debug.WriteLine("After add range: " + check);
-            }
-
-            check++;
-            if (check > 2)
-            {
-                _barDataSet.RemoveRange(0, arraySize);
-
-            }
-
-            _barDataSet.AddRange(DoubleArray().Wrap());
-
-            await _barChart.Update();
-            StateHasChanged();
-
-            Debug.WriteLine(tempArray);
-            tempArray = "";
-
-        }
-
-        protected override void OnInitialized()
-        {
-            _barChartConfig = new BarConfig
-            {
-                Options = new BarOptionsSub
+                Animation = new Animation()
                 {
-                    Animation = new Animation()
-                    {
-                        Duration = 0
-                    },
-                    Title = new OptionsTitle
-                    {
-                        Display = true,
-                        Text = "Simple Bar Chart"
-                    },
+                    Duration = 0
+                },
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = "Simple Bar Chart"
+                },
 
-                    Responsive = true,
-                    Scales = new BarScales
-                    {
-                        YAxes = new List<CartesianAxis> {
+                Responsive = true,
+                Scales = new BarScales
+                {
+                    YAxes = new List<CartesianAxis> {
                         new LinearCartesianAxis {
                             Ticks = new LinearCartesianTicks {
                                 AutoSkip = false,
-                                Min = 0 // Otherwise the lowest value in the dataset won't be visible
+                                Min = 0 
                             }
                         }
                     }
-                    }
                 }
-            };
-
-            _barChartConfig.Data.Labels.AddRange(Range());
-
-            _barDataSet = new BarDataset<DoubleWrapper>
-            {
-                Label = "",
-                BackgroundColor = "red",
-                BorderWidth = 0,
-                HoverBackgroundColor = ColorUtil.RandomColorString(),
-                HoverBorderColor = ColorUtil.RandomColorString(),
-                HoverBorderWidth = 1,
-                BorderColor = "#ffffff"
-            };
-
-            _barDataSet.AddRange(DoubleArray().Wrap());
-            _barChartConfig.Data.Datasets.Add(_barDataSet);
-
-        }
+            }
+        };
 
 
-        private double[] DoubleArray()
+        check = 1;
+        array = new int[printSize];
+        arraySize = printSize;
+
+
+        srt.CreateRandomArray(arraySize, array, printRange);
+
+        _barDataSet = new BarDataset<DoubleWrapper>
         {
-            List<double> temp = new List<double>();
-            if (array != null)
-            {
-                for (int i = 0; i < array.Length; i++)
-                {
-                    temp.Add(array[i]);
-                }
-                double[] d = temp.ToArray();
-                return d;
-            }
-            if (array == null)
-            {
-                double[] d = temp.ToArray();
-                return d;
-            }
-            return null;
-        }
+            Label = "",
+            BackgroundColor = "red",
+            BorderWidth = 0,
+            HoverBackgroundColor = ColorUtil.RandomColorString(),
+            HoverBorderColor = ColorUtil.RandomColorString(),
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
 
-        private string[] Range()
+        _barDataSet.AddRange(DoubleArray().Wrap());
+        _barChartConfig.Data.Datasets.Add(_barDataSet);
+
+        _barChartConfig.Data.Labels.AddRange(Range());
+        checkBool = true;
+
+        for (int i = 0; i < array.Length; i++)
         {
-            List<string> temp = new List<string>();
-            if (array == null)
-            {
-
-                string[] str = temp.ToArray();
-                return str;
-            }
-            else
-            {
-                for (int i = 0; i < array.Length; i++)
-                {
-                    temp.Add(i + "");
-                }
-                string[] str = temp.ToArray();
-                return str;
-            }
-
+            stro = stro + " " + array[i];
         }
+        Debug.WriteLine(stro);
+        startScenario = true;
+    }
 
-        public void DisableCheck()
+
+    private double[] DoubleArray()
+    {
+        List<double> temp = new List<double>();
+        if (array != null)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp.Add(array[i]);
+            }
+            double[] d = temp.ToArray();
+            return d;
+        }
+        if (array == null)
+        {
+            double[] d = temp.ToArray();
+            return d;
+        }
+        return null;
+    }
+
+    private string[] Range()
+    {
+        List<string> temp = new List<string>();
+        if (array == null)
         {
 
-            if (IsDisabled)
-            {
-                IsDisabled = false;
-            }
-            else
-            {
-                IsDisabled = true;
-            }
-            StateHasChanged();
+            string[] str = temp.ToArray();
+            return str;
         }
+        else
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp.Add(i + "");
+            }
+            string[] str = temp.ToArray();
+            return str;
+        }
+
+    }
+
+    public void DisableCheck()
+    {
+
+        if (IsDisabled)
+        {
+            IsDisabled = false;
+        }
+        else
+        {
+            IsDisabled = true;
+        }
+        if (startScenario)
+        {
+            _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+            _barDataSet.RemoveRange(0, arraySize);
+            startScenario = false;
+        }
+        StateHasChanged();
+    }
+
 }

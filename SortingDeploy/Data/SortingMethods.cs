@@ -12,17 +12,18 @@ namespace SortingDeploy.Data
 
     {
         
-        public int RandomNumber(int max)
-        {
-            Random random = new Random();
-            return random.Next(1, max);
-        }
+        //public int RandomNumber(int max)
+        //{
+        //    Random random = new Random();
+        //    return random.Next(1, max);
+        //}
 
         public void CreateRandomArray(int arraySize, int[] array, int max)
         {
+            Random random = new Random();
             for (int i = 0; i < arraySize; i++)
             {
-                array[i] = RandomNumber(max);
+                array[i] = random.Next(1, max);
             }
         }
 
