@@ -159,8 +159,12 @@
         {
             _barChartConfig = new BarConfig
             {
-                Options = new BarOptions
+                Options = new BarOptionsSub
                 {
+                    Animation = new Animation()
+                    {
+                        Duration = 0
+                    },
                     Title = new OptionsTitle
                     {
                         Display = true,
