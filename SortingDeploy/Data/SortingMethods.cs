@@ -112,101 +112,102 @@ namespace SortingDeploy.Data
         }
 
         private string stro;
-        Index index;
+        
         int timeQuick;
         
-        public async Task QuickSortCall(int[] array, int start, int end, Index i, int time)
+        public async Task QuickSortCall(int[] array, int start, int end, Index index, int time)
         {
-            index = i;
+            
             timeQuick = time;
             //index.DisableCheck();
             //int delay = TimeCalculation(time, "Quick Sort");
-            QuickSort(array, start, end);
+            QuickSort(array, start, end, index, time);
             await index.Update(array);
         }
-       
-        public async void QuickSort(int[] array, int left, int right)
-        {
-            int i = left;
-            int j = right;
 
-            var pivot = array[(left + right) / 2];
-             
-            while (i <= j)
-            {
-                
-                while (array[i] < pivot)
-                    i++;
-
-                while (array[j] > pivot)
-                    j--;
-
-                if (i <= j)
-                {
-                    var tmp = array[i];
-                    array[i] = array[j];
-                    array[j] = tmp;
-                    Thread.Sleep(10);
-                    i++;
-                    j--;
-                }
-            }
-
-            if (left < j)
-                QuickSort(array, left, j);
-            await index.Update(array);
-            Thread.Sleep(timeQuick);
-            if (i < right)
-                QuickSort(array, i, right);
-            await index.Update(array);
-            Thread.Sleep(timeQuick);
-        }
-
-        //public async Task QuickSort(int[] array, int start, int end, Index index, int time)
+        //public async void QuickSort(int[] array, int left, int right, Index index)
         //{
-            
-        //    int i;
-        //    if (start < end)
-        //    {
-        //        index.Update(array);
-        //        i = Partition(array, start, end, time);
-        //        index.Update(array);
-        //        await QuickSort(array, start, i - 1, index, time);
-        //        index.Update(array);
-        //        await QuickSort(array, i + 1, end, index, time);
-        //        Thread.Sleep(time);
-                
-        //    }
-        //    index.Update(array);
-            
-            
-        //}
+        //    int i = left;
+        //    int j = right;
 
-        //private int Partition(int[] array, int start, int end, int delay)
-        //{
-            
-        //    int temp;
-        //    int p = array[end];
-        //    int i = start - 1;
-            
-        //    for (int j = start; j <= end - 1; j++)
+        //    var pivot = array[(left + right) / 2];
+
+        //    while (i <= j)
         //    {
-        //        Thread.Sleep(delay);
-        //        if (array[j] <= p)
-        //        {
+
+        //        while (array[i] < pivot)
+
         //            i++;
-        //            temp = array[i];
+
+        //        while (array[j] > pivot)
+        //            j--;
+
+        //        if (i <= j)
+        //        {
+        //            var tmp = array[i];
         //            array[i] = array[j];
-        //            array[j] = temp;
+        //            array[j] = tmp;
+        //            Thread.Sleep(10);
+        //            i++;
+        //            j--;
         //        }
         //    }
 
-        //    temp = array[i + 1];
-            
-        //    array[i + 1] = array[end];
-        //    array[end] = temp;
-        //    return i + 1;
+        //    if (left < j)
+        //        QuickSort(array, left, j, index);
+        //    await index.Update(array);
+        //    Thread.Sleep(timeQuick);
+        //    if (i < right)
+        //        QuickSort(array, i, right, index);
+        //    await index.Update(array);
+        //    Thread.Sleep(timeQuick);
         //}
+
+        public async Task QuickSort(int[] array, int start, int end, Index index, int time)
+        {
+
+            int i;
+            if (start < end)
+            {
+                index.Update(array);
+                i = Partition(array, start, end, time);
+                index.Update(array);
+                await QuickSort(array, start, i - 1, index, time);
+                index.Update(array);
+                await QuickSort(array, i + 1, end, index, time);
+                Thread.Sleep(time);
+
+            }
+            index.Update(array);
+
+
+        }
+
+        private int Partition(int[] array, int start, int end, int delay)
+        {
+
+            int temp;
+            int p = array[end];
+            int i = start - 1;
+
+            for (int j = start; j <= end - 1; j++)
+            {
+                Thread.Sleep(delay);
+                if (array[j] <= p)
+                {
+                    i++;
+                    temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+
+            temp = array[i + 1];
+
+            array[i + 1] = array[end];
+            array[end] = temp;
+            return i + 1;
+        }
 
         private int TimeCalculation(int time, string sort)
         {
