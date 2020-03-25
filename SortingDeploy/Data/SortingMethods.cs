@@ -11,7 +11,7 @@ namespace SortingDeploy.Data
     public class SortingMethods
 
     {
-        private int delay;
+        
         public void CreateRandomArray(int arraySize, int[] array, int max)
         {
             Random random = new Random();
@@ -23,7 +23,7 @@ namespace SortingDeploy.Data
 
         public async Task BubbleSort(int[] array, int arraySize, Index index, int time)
         {
-            delay = TimeCalculation(time, "Bubble Sort");
+            int delay = TimeCalculation(time, "Bubble Sort");
             for (int i = arraySize - 1; i > 0; i--)
             {
                 if (i == arraySize - 1)
@@ -112,35 +112,40 @@ namespace SortingDeploy.Data
         }
 
         private string stro;
-
-        public async Task QuickSortCall(int[] array, int start, int end, Index index, int time)
+        Index index;
+        int timeQuick;
+        
+        public async Task QuickSortCall(int[] array, int start, int end, Index i, int time)
         {
+            index = i;
+            timeQuick = time;
             //index.DisableCheck();
             //int delay = TimeCalculation(time, "Quick Sort");
             QuickSort(array, start, end);
             await index.Update(array);
         }
-        public void QuickSort(int[] numbers, int left, int right)
+       
+        public async void QuickSort(int[] array, int left, int right)
         {
             int i = left;
             int j = right;
 
-            var pivot = numbers[(left + right) / 2];
-
+            var pivot = array[(left + right) / 2];
+             
             while (i <= j)
             {
                 
-                while (numbers[i] < pivot)
+                while (array[i] < pivot)
                     i++;
 
-                while (numbers[j] > pivot)
+                while (array[j] > pivot)
                     j--;
 
                 if (i <= j)
                 {
-                    var tmp = numbers[i];
-                    numbers[i] = numbers[j];
-                    numbers[j] = tmp;
+                    var tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
                     Thread.Sleep(10);
                     i++;
                     j--;
@@ -148,10 +153,13 @@ namespace SortingDeploy.Data
             }
 
             if (left < j)
-                QuickSort(numbers, left, j);
-
+                QuickSort(array, left, j);
+            await index.Update(array);
+            Thread.Sleep(timeQuick);
             if (i < right)
-                QuickSort(numbers, i, right);
+                QuickSort(array, i, right);
+            await index.Update(array);
+            Thread.Sleep(timeQuick);
         }
 
         //public async Task QuickSort(int[] array, int start, int end, Index index, int time)
@@ -174,31 +182,31 @@ namespace SortingDeploy.Data
             
         //}
 
-        private int Partition(int[] array, int start, int end, int delay)
-        {
+        //private int Partition(int[] array, int start, int end, int delay)
+        //{
             
-            int temp;
-            int p = array[end];
-            int i = start - 1;
+        //    int temp;
+        //    int p = array[end];
+        //    int i = start - 1;
             
-            for (int j = start; j <= end - 1; j++)
-            {
-                Thread.Sleep(delay);
-                if (array[j] <= p)
-                {
-                    i++;
-                    temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
-                }
-            }
+        //    for (int j = start; j <= end - 1; j++)
+        //    {
+        //        Thread.Sleep(delay);
+        //        if (array[j] <= p)
+        //        {
+        //            i++;
+        //            temp = array[i];
+        //            array[i] = array[j];
+        //            array[j] = temp;
+        //        }
+        //    }
 
-            temp = array[i + 1];
+        //    temp = array[i + 1];
             
-            array[i + 1] = array[end];
-            array[end] = temp;
-            return i + 1;
-        }
+        //    array[i + 1] = array[end];
+        //    array[end] = temp;
+        //    return i + 1;
+        //}
 
         private int TimeCalculation(int time, string sort)
         {

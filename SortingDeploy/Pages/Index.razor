@@ -22,6 +22,7 @@
     <option>Quick Sort</option>
 </select>
 
+
 <p></p>
 <p>Number of randoms:</p>
 <input type="range" min="4" max="50" step="1" value="printSize" disabled="@IsDisabled" @oninput="@((args) => CalcSize(args.Value.ToString()))" />
@@ -120,7 +121,7 @@
 
 
     }
-
+   
     private async void Sort()
     {
 
@@ -238,7 +239,6 @@
         Debug.WriteLine(stro);
         startScenario = true;
     }
-
 
     private double[] DoubleArray()
     {
