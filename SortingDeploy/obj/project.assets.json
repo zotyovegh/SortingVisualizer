@@ -6915,23 +6915,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Zolly\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\zotyo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zolly\\source\\repos\\SortingDeploy\\SortingDeploy\\SortingDeploy.csproj",
+      "projectUniqueName": "C:\\Users\\zotyo\\Documents\\GitHub\\SortingDeploy\\SortingDeploy\\SortingDeploy.csproj",
       "projectName": "SortingDeploy",
-      "projectPath": "C:\\Users\\Zolly\\source\\repos\\SortingDeploy\\SortingDeploy\\SortingDeploy.csproj",
-      "packagesPath": "C:\\Users\\Zolly\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zolly\\source\\repos\\SortingDeploy\\SortingDeploy\\obj\\",
+      "projectPath": "C:\\Users\\zotyo\\Documents\\GitHub\\SortingDeploy\\SortingDeploy\\SortingDeploy.csproj",
+      "packagesPath": "C:\\Users\\zotyo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\zotyo\\Documents\\GitHub\\SortingDeploy\\SortingDeploy\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Zolly\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\zotyo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
