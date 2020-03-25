@@ -46,7 +46,7 @@ namespace SortingDeploy.Data
             }
             Debug.WriteLine("Most kellene");
             Thread.Sleep(1000);
-            index.Enable();
+            //index.Enable();
             Debug.WriteLine("Most kellett volna");
             //await index.DisableCheck();
         }
@@ -119,9 +119,10 @@ namespace SortingDeploy.Data
         {
             //index.DisableCheck();
             int delay = TimeCalculation(time, "Quick Sort");
-            QuickSort(array, start, end, index, delay );
+            await QuickSort(array, start, end, index, delay );
             await index.Update(array);
-            index.Enable();
+            //index.Enable();
+            Debug.WriteLine("Befejezte");
         }
        
         //public async void QuickSort(int[] array, int left, int right, Index index)

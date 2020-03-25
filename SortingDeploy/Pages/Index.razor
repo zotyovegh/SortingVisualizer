@@ -121,28 +121,28 @@
 
 
     }
-    public bool isEnded;
+
     private async void Sort()
     {
         //isEnded = false;
-        //IsDisabled = true;
+        await Disable();
         IsFirst();
 
         if (sortingType == "Bubble Sort")
         {
-            srt.BubbleSort(array, arraySize, this, printTime);
+            await srt.BubbleSort(array, arraySize, this, printTime);
         }
         else if (sortingType == "Selection Sort")
         {
-            srt.SelectionSort(array, arraySize, this, printTime);
+            await srt.SelectionSort(array, arraySize, this, printTime);
         }
         else if (sortingType == "Insertion Sort")
         {
-            srt.InsertionSort(array, arraySize, this, printTime);
+            await srt.InsertionSort(array, arraySize, this, printTime);
         }
         else if (sortingType == "Quick Sort")
         {
-            srt.QuickSortCall(array, 0, arraySize - 1, this, printTime * 3);
+            await srt.QuickSortCall(array, 0, arraySize - 1, this, printTime * 3);
         }
 
 
@@ -282,16 +282,16 @@
 
     }
 
-    public void Disable()
+    public async Task Disable()
     {
         IsDisabled = true;
 
-        if (startScenario)
-        {
-            _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
-            _barDataSet.RemoveRange(0, arraySize);
-            startScenario = false;
-        }
+        //if (startScenario)
+        //{
+        //    _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+        //    _barDataSet.RemoveRange(0, arraySize);
+        //    startScenario = false;
+        //}
     }
     public void Enable()
     {
