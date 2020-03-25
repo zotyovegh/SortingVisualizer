@@ -44,7 +44,11 @@ namespace SortingDeploy.Data
                     }
                 }
             }
-            index.DisableCheck();
+            Debug.WriteLine("Most kellene");
+            Thread.Sleep(1000);
+            index.Enable();
+            Debug.WriteLine("Most kellett volna");
+            //await index.DisableCheck();
         }
 
         public void SwapArrayValues(int[] array, int firstPos, int secondPos)
@@ -81,7 +85,6 @@ namespace SortingDeploy.Data
                 await index.Update(array);
                 Thread.Sleep(delay);
             }
-            index.DisableCheck();
         }
 
         public async Task InsertionSort(int[] array, int arraySize, Index index, int time)
@@ -108,23 +111,19 @@ namespace SortingDeploy.Data
                 array[temp] = numToInsert;
                 
             }
-            index.DisableCheck();
         }
 
         private string stro;
         
-        int timeQuick;
-        
         public async Task QuickSortCall(int[] array, int start, int end, Index index, int time)
         {
-            
-            timeQuick = time;
             //index.DisableCheck();
-            //int delay = TimeCalculation(time, "Quick Sort");
-            QuickSort(array, start, end, index, time);
+            int delay = TimeCalculation(time, "Quick Sort");
+            QuickSort(array, start, end, index, delay );
             await index.Update(array);
+            index.Enable();
         }
-
+       
         //public async void QuickSort(int[] array, int left, int right, Index index)
         //{
         //    int i = left;
@@ -165,25 +164,21 @@ namespace SortingDeploy.Data
 
         public async Task QuickSort(int[] array, int start, int end, Index index, int time)
         {
-
             int i;
             if (start < end)
             {
-                index.Update(array);
-                i = Partition(array, start, end, time);
-                index.Update(array);
+                //index.Update(array);
+                i = Partition(array, start, end, time, index);
+                //index.Update(array);
                 await QuickSort(array, start, i - 1, index, time);
-                index.Update(array);
+                //index.Update(array);
                 await QuickSort(array, i + 1, end, index, time);
-                Thread.Sleep(time);
-
+                //Thread.Sleep(time);
             }
-            index.Update(array);
-
-
+            //index.Update(array);
         }
 
-        private int Partition(int[] array, int start, int end, int delay)
+        private int Partition(int[] array, int start, int end, int delay, Index index)
         {
 
             int temp;
@@ -192,13 +187,16 @@ namespace SortingDeploy.Data
 
             for (int j = start; j <= end - 1; j++)
             {
-                Thread.Sleep(delay);
+                //Thread.Sleep(delay);
                 if (array[j] <= p)
                 {
                     i++;
-                    temp = array[i];
-                    array[i] = array[j];
-                    array[j] = temp;
+                    //temp = array[i];
+                    //array[i] = array[j];
+                    //array[j] = temp;
+                    SwapArrayValues(array, i, j);
+                    index.Update(array);
+                    Thread.Sleep(delay);
                 }
             }
 
@@ -214,24 +212,23 @@ namespace SortingDeploy.Data
             int delay = 50;
             if (sort == "Bubble Sort")
             {
-                delay = time * 7 - 3;
+                delay = time * 7;
             }
             else if (sort == "Selection Sort")
             {
-                delay = time * 7 - 3;
+                delay = time * 7;
             }
             else if (sort == "Insertion Sort")
             {
-                delay = time * 7 - 3;
+                delay = time * 7;
             }
             else if (sort == "Quick Sort")
             {
-                delay = time;
+                delay = time * 4;
             }
 
             return delay;
 
         }
-
     }
 }

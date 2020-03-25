@@ -31,7 +31,7 @@
 <input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" />
 <p>@printRange</p>
 <p>Speed:</p>
-<input type="range" min="1" max="100" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" />
+<input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" />
 <p>@printTime</p>
 
 
@@ -60,12 +60,12 @@
     private int rangeOfRandoms;
     private int printSize = 27;
     private int printRange = 52;
-    private int printTime = 50;
+    private int printTime = 25;
     private string currentArray;
     private string tempArray;
     private int check;
     private bool checkBool;
-    protected bool IsDisabled { get; set; }
+    private bool IsDisabled { get; set; }
     private bool startScenario;
 
 
@@ -121,11 +121,12 @@
 
 
     }
-   
+    public bool isEnded;
     private async void Sort()
     {
-
-        DisableCheck();
+        //isEnded = false;
+        //IsDisabled = true;
+        IsFirst();
 
         if (sortingType == "Bubble Sort")
         {
@@ -141,8 +142,9 @@
         }
         else if (sortingType == "Quick Sort")
         {
-            srt.QuickSortCall(array, 0, arraySize - 1, this, printTime);
+            srt.QuickSortCall(array, 0, arraySize - 1, this, printTime * 3);
         }
+
 
 
     }
@@ -280,17 +282,24 @@
 
     }
 
-    public void DisableCheck()
+    public void Disable()
     {
+        IsDisabled = true;
 
-        if (IsDisabled)
+        if (startScenario)
         {
-            IsDisabled = false;
+            _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+            _barDataSet.RemoveRange(0, arraySize);
+            startScenario = false;
         }
-        else
-        {
-            IsDisabled = true;
-        }
+    }
+    public void Enable()
+    {
+        IsDisabled = false;
+
+    }
+    public void IsFirst()
+    {
         if (startScenario)
         {
             _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
