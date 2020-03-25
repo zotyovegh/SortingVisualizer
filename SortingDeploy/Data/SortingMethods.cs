@@ -117,12 +117,10 @@ namespace SortingDeploy.Data
         
         public async Task QuickSortCall(int[] array, int start, int end, Index index, int time)
         {
-            //index.DisableCheck();
             int delay = TimeCalculation(time, "Quick Sort");
             await QuickSort(array, start, end, index, delay );
             await index.Update(array);
-            //index.Enable();
-            Debug.WriteLine("Befejezte");
+            //Debug.WriteLine("Befejezte");
         }
        
         //public async void QuickSort(int[] array, int left, int right, Index index)
@@ -168,15 +166,15 @@ namespace SortingDeploy.Data
             int i;
             if (start < end)
             {
-                //index.Update(array);
+                
                 i = Partition(array, start, end, time, index);
-                //index.Update(array);
+                
                 await QuickSort(array, start, i - 1, index, time);
-                //index.Update(array);
+                
                 await QuickSort(array, i + 1, end, index, time);
-                //Thread.Sleep(time);
+                Debug.WriteLine("hapci");
             }
-            //index.Update(array);
+            
         }
 
         private int Partition(int[] array, int start, int end, int delay, Index index)
