@@ -12,16 +12,13 @@
 @using ChartJs.Blazor.Charts
 @using ChartJs.Blazor.Util
 
-<h1>Hello world</h1>
-
+<h1>Sorting Visualizer by Zoltan Vegh</h1>
 
 <select class="form-control" disabled="@IsDisabled" @bind="sortingType">
     <option>Bubble Sort</option>
     <option>Selection Sort</option>
     <option>Insertion Sort</option>
-    <option>Quick Sort</option>
 </select>
-
 
 <p></p>
 <p>Number of randoms:</p>
@@ -30,15 +27,12 @@
 <p>Range of randoms:</p>
 <input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" />
 <p>@printRange</p>
-<p>Speed:</p>
+<p>Delay between actions:</p>
 <input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" />
 <p>@printTime</p>
 
-
 <button class="btn btn-primary" @onclick="Sort" disabled="@IsDisabled">Click me</button>
 
-<p>Random number: @stro</p>
-<p>Sorting: @currentArray</p>
 <div style="height: 300px; width: 500px">
     <ChartJsBarChart @ref="_barChart"
                      Config="@_barChartConfig"
@@ -50,24 +44,18 @@
 @code {
 
     SortingMethods srt = new SortingMethods();
-    private bool b = false;
     private int arraySize = 10;
     private int[] array;
     private string stro = "";
 
     private string sortingType = "Bubble Sort";
-    private int numberOfRandoms;
-    private int rangeOfRandoms;
     private int printSize = 27;
     private int printRange = 52;
     private int printTime = 25;
-    private string currentArray;
-    private string tempArray;
-    private int check;
-    private bool checkBool;
-    private bool IsDisabled { get; set; }
-    private bool startScenario;
 
+    private int check;
+    public bool IsDisabled { get; set; }
+    private bool startScenario;
 
     private BarConfig _barChartConfig;
     private ChartJsBarChart _barChart;
@@ -95,7 +83,6 @@
         printTime = Convert.ToInt32(step);
     }
 
-
     private void Randomize()
     {
         check = 1;
@@ -104,62 +91,40 @@
         _barDataSet.RemoveRange(0, arraySize);
         _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
 
-        checkBool = true;
         array = new int[printSize];
         arraySize = printSize;
 
         stro = "";
         srt.CreateRandomArray(arraySize, array, printRange);
-        for (int i = 0; i < array.Length; i++)
-        {
-            stro = stro + " " + array[i];
-        }
-        Debug.WriteLine(stro);
-
-
         Update(array);
-
-
     }
 
     private async void Sort()
     {
-        //isEnded = false;
-        await Disable();
-        IsFirst();
+        DisableCheck();
 
         if (sortingType == "Bubble Sort")
         {
-            await srt.BubbleSort(array, arraySize, this, printTime);
+            srt.BubbleSort(array, arraySize, this, printTime * 7);
         }
         else if (sortingType == "Selection Sort")
         {
-            await srt.SelectionSort(array, arraySize, this, printTime);
+            srt.SelectionSort(array, arraySize, this, printTime * 7);
         }
         else if (sortingType == "Insertion Sort")
         {
-            await srt.InsertionSort(array, arraySize, this, printTime);
+            srt.InsertionSort(array, arraySize, this, printTime * 7);
         }
-        else if (sortingType == "Quick Sort")
-        {
-            await srt.QuickSort(array, 0, arraySize - 1, this, printTime * 12);
-        }
-
-
 
     }
 
     public async Task Update(int[] a)
     {
-        Debug.WriteLine("kuka");
         array = a;
 
         if (check == 1)
         {
-            Debug.WriteLine("Before add range: " + check);
             _barChartConfig.Data.Labels.AddRange(Range());
-
-            Debug.WriteLine("After add range: " + check);
         }
 
         check++;
@@ -173,7 +138,6 @@
 
         await _barChart.Update();
 
-        tempArray = "";
 
     }
 
@@ -231,13 +195,7 @@
         _barChartConfig.Data.Datasets.Add(_barDataSet);
 
         _barChartConfig.Data.Labels.AddRange(Range());
-        checkBool = true;
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            stro = stro + " " + array[i];
-        }
-        Debug.WriteLine(stro);
         startScenario = true;
     }
 
@@ -282,22 +240,26 @@
 
     }
 
-    public async Task Disable()
+    public void DisableCheck()
     {
-        IsDisabled = true;
+        if (IsDisabled)
+        {
+            IsDisabled = false;
+        }
+        else
+        {
+            IsDisabled = true;
+        }
+        if (startScenario)
+        {
+            _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
+            _barDataSet.RemoveRange(0, arraySize);
+            startScenario = false;
+        }
+        StateHasChanged();
 
-        //if (startScenario)
-        //{
-        //    _barChartConfig.Data.Labels.RemoveRange(0, arraySize);
-        //    _barDataSet.RemoveRange(0, arraySize);
-        //    startScenario = false;
-        //}
     }
-    public void Enable()
-    {
-        IsDisabled = false;
 
-    }
     public void IsFirst()
     {
         if (startScenario)
