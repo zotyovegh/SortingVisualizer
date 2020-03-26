@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
-using Index = SortingDeploy.Pages.Index;
+using Index = SortingDeploy.Pages.IndexPage;
 
 
 namespace SortingDeploy.Data
