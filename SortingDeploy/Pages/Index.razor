@@ -23,18 +23,18 @@
 
         <p></p>
         <p>Number of randoms:</p>
-        <input type="range" min="4" max="50" step="1" value="printSize" disabled="@IsDisabled" @oninput="@((args) => CalcSize(args.Value.ToString()))" style="width: 200px"/>
+        <input type="range" min="4" max="50" step="1" value="printSize" disabled="@IsDisabled" @oninput="@((args) => CalcSize(args.Value.ToString()))" style="width: 200px" />
         <p>@printSize</p>
         <p>Range of randoms:</p>
-        <input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" style="width: 200px"/>
+        <input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" style="width: 200px" />
         <p>@printRange</p>
         <p>Delay between actions:</p>
-        <input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" style="width: 200px"/>
+        <input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" style="width: 200px" />
         <p>@printTime</p>
 
         <button class="btn btn-primary" @onclick="Sort" disabled="@IsDisabled">Click me</button>
     </div>
-    <div class="boxcolumn"style="margin-top:50px">
+    <div class="boxcolumn" style="margin-top:50px">
         <div style="height: 400px; width: 600px">
             <ChartJsBarChart @ref="_barChart"
                              Config="@_barChartConfig"
@@ -43,6 +43,12 @@
         </div>
     </div>
 </div>
+<h5 style="width:1000px ">Welcome to Sorting Visualizer! I have created this project, in order to further develop my knowledge about sorting methods, and get more familiar with Blazor.</h5>
+<p></p>
+<h5>The source code is available on my <a href="https://github.com/zotyovegh/SortingDeploy">GitHUB</a></h5>
+
+
+
 @code {
 
     SortingMethods srt = new SortingMethods();

@@ -175,9 +175,23 @@ app {
     .navbar-toggler {
         display: none;
     }
-
+        
     .sidebar .collapse {
-        /* Never collapse the sidebar for wide screens */
         display: block;
     }
+    .boxcolumn {
+        float: left;
+        width: 300px;
+        padding: 10px;
+        height: 300px; 
+    }
+
+    
+    .boxrow:after {
+        content: "";
+        display: table;
+        clear: both;
+        height: 100px;
+    }
+    
 }

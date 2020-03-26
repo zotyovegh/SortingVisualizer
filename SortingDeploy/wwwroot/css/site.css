@@ -175,8 +175,7 @@ app {
     .navbar-toggler {
         display: none;
     }
-    <style >
-    
+        
     .sidebar .collapse {
         display: block;
     }
@@ -192,6 +191,7 @@ app {
         content: "";
         display: table;
         clear: both;
+        height: 100px;
     }
     
 }
