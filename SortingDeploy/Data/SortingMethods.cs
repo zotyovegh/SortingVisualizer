@@ -30,7 +30,11 @@ namespace SortingDeploy.Data
                 {
                     if (array[j] > array[j + 1])
                     {
-                        Thread.Sleep(time);
+                        if(time != 0)
+                        {
+                        await Task.Delay(time);
+                        //Thread.Sleep(time);
+                        }
                         SwapArrayValues(array, j, j + 1);                         
                         await index.Update(array);                        
                     }
@@ -61,7 +65,7 @@ namespace SortingDeploy.Data
                 
                 SwapArrayValues(array, x, min);
                 await index.Update(array);
-                Thread.Sleep(time);
+                await Task.Delay(time);
             }
             index.DisableCheck();
         }
@@ -80,7 +84,10 @@ namespace SortingDeploy.Data
                     array[temp] = array[temp - 1];
                     temp--;
                     await index.Update(array);
-                    Thread.Sleep(time);
+                    if (time != 0)
+                    {
+                        await Task.Delay(time);
+                    }
                 }
                 array[temp] = numToInsert;                
             }

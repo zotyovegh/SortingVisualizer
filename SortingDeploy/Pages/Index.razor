@@ -13,34 +13,36 @@
 @using ChartJs.Blazor.Util
 
 <h1>Sorting Visualizer by Zoltan Vegh</h1>
+<div class="boxrow">
+    <div class="boxcolumn">
+        <select class="form-control" disabled="@IsDisabled" style="width: 200px" @bind="sortingType">
+            <option>Bubble Sort</option>
+            <option>Selection Sort</option>
+            <option>Insertion Sort</option>
+        </select>
 
-<select class="form-control" disabled="@IsDisabled" @bind="sortingType">
-    <option>Bubble Sort</option>
-    <option>Selection Sort</option>
-    <option>Insertion Sort</option>
-</select>
+        <p></p>
+        <p>Number of randoms:</p>
+        <input type="range" min="4" max="50" step="1" value="printSize" disabled="@IsDisabled" @oninput="@((args) => CalcSize(args.Value.ToString()))" style="width: 200px"/>
+        <p>@printSize</p>
+        <p>Range of randoms:</p>
+        <input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" style="width: 200px"/>
+        <p>@printRange</p>
+        <p>Delay between actions:</p>
+        <input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" style="width: 200px"/>
+        <p>@printTime</p>
 
-<p></p>
-<p>Number of randoms:</p>
-<input type="range" min="4" max="50" step="1" value="printSize" disabled="@IsDisabled" @oninput="@((args) => CalcSize(args.Value.ToString()))" />
-<p>@printSize</p>
-<p>Range of randoms:</p>
-<input type="range" min="5" max="100" step="1" value="printRange" disabled="@IsDisabled" @oninput="@((args) => CalcRange(args.Value.ToString()))" />
-<p>@printRange</p>
-<p>Delay between actions:</p>
-<input type="range" min="1" max="50" step="1" value="printTime" disabled="@IsDisabled" @oninput="@((args) => CalcTime(args.Value.ToString()))" />
-<p>@printTime</p>
-
-<button class="btn btn-primary" @onclick="Sort" disabled="@IsDisabled">Click me</button>
-
-<div style="height: 300px; width: 500px">
-    <ChartJsBarChart @ref="_barChart"
-                     Config="@_barChartConfig"
-                     Width="300"
-                     Height="150" />
+        <button class="btn btn-primary" @onclick="Sort" disabled="@IsDisabled">Click me</button>
+    </div>
+    <div class="boxcolumn"style="margin-top:50px">
+        <div style="height: 400px; width: 600px">
+            <ChartJsBarChart @ref="_barChart"
+                             Config="@_barChartConfig"
+                             Width="300"
+                             Height="150" />
+        </div>
+    </div>
 </div>
-
-
 @code {
 
     SortingMethods srt = new SortingMethods();
@@ -104,7 +106,7 @@
 
         if (sortingType == "Bubble Sort")
         {
-            srt.BubbleSort(array, arraySize, this, printTime * 5);
+            srt.BubbleSort(array, arraySize, this, printTime * 5 - 5);
         }
         else if (sortingType == "Selection Sort")
         {
@@ -112,7 +114,7 @@
         }
         else if (sortingType == "Insertion Sort")
         {
-            srt.InsertionSort(array, arraySize, this, printTime * 6);
+            srt.InsertionSort(array, arraySize, this, printTime * 5 - 5);
         }
 
     }
@@ -150,12 +152,6 @@
                 {
                     Duration = 0
                 },
-                Title = new OptionsTitle
-                {
-                    Display = true,
-                    Text = "Simple Bar Chart"
-                },
-
                 Responsive = true,
                 Scales = new BarScales
                 {
@@ -184,9 +180,6 @@
             Label = "",
             BackgroundColor = "red",
             BorderWidth = 0,
-            HoverBackgroundColor = ColorUtil.RandomColorString(),
-            HoverBorderColor = ColorUtil.RandomColorString(),
-            HoverBorderWidth = 1,
             BorderColor = "#ffffff"
         };
 
@@ -229,7 +222,7 @@
         }
         else
         {
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 1; i < array.Length + 1; i++)
             {
                 temp.Add(i + "");
             }
