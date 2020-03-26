@@ -276,5 +276,3 @@ C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp
 C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\SortingDeploy.dll
 C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\SortingDeploy.pdb
 C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\SortingDeploy.genruntimeconfig.cache
-C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\IndexPage.razor.g.cs
-C:\Users\zotyo\Documents\GitHub\SortingDeploy\SortingDeploy\obj\Debug\netcoreapp3.1\Razor\Pages\IndexPage.razor.g.cs
